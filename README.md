@@ -26,3 +26,19 @@ This project demonstrates a **Moleculer** microservices setup using **Docker** c
 - **Docker** (to run containers)
 - **Docker Compose** (to manage multi-container environments)
 
+## 🛠 Service Details
+
+### 1. User-Service
+
+- **Function**: Handles user creation.
+- **Endpoint**: Accessible via API routes exposed by Moleculer.
+- **Action**: addUser
+- **Event**: userCreated (triggered after user creation)
+- **Docker Port**: 3000.
+
+### 2. Email-Service
+
+- **Function**: Sends a greeting email after the user is created.
+- **Action**: sendGreetingEmail
+- **Triggered By**: user-service via event userCreated
+- **Docker Port**: 3001.
