@@ -1,5 +1,3 @@
-# moleculer-with-docker
-
 # Moleculer with Docker
 
 This project demonstrates a **Moleculer** microservices setup using **Docker** containers. It consists of two services: `user-service` and `email-service`, running on **NATS** as the transporter. The system also integrates **NodeMailer** to send greeting emails whenever a user is created.
