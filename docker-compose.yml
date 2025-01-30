@@ -1,0 +1,29 @@
+services:
+  nats:
+    image: nats:latest
+    container_name: nats-server
+    restart: always
+    ports:
+      - "4222:4222"
+
+  user-service:
+    build: ./services/user-service
+    container_name: user-service
+    restart: always
+    env_file:
+      - ./services/user-service/.env
+    environment:
+      TRANSPORTER: "nats://nats:4222"
+    ports:
+      - "3000:3000"
+
+  email-service:
+    build: ./services/email-service
+    container_name: email-service
+    restart: always
+    env_file:
+      - ./services/email-service/.env
+    environment:
+      TRANSPORTER: "nats://nats:4222"
+    ports:
+      - "3001:3001"

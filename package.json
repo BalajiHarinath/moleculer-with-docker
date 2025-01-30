@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/BalajiHarinath/moleculer-with-docker#readme",
   "dependencies": {
-    "moleculer": "^0.14.35"
+    "dotenv": "^16.4.7",
+    "nats": "^2.29.1"
   }
 }
