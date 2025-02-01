@@ -13,5 +13,8 @@ COPY . .
 # Expose port
 EXPOSE 3000
 
+# Compile TypeScript
+RUN npm run build
+
 # Run the service
 CMD ["npm", "run", "dev"]
