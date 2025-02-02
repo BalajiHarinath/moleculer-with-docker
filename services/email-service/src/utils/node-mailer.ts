@@ -1,8 +1,9 @@
 import { config } from 'dotenv';
 import { Errors } from 'moleculer';
 import nodemailer from 'nodemailer';
-import { MailOptions } from '../types/nodemailer.types';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { ZodError } from 'zod';
+import { EmailPayload, EmailPayloadSchema, MailOptions } from '../types/nodemailer.types';
 
 config();
 function getMailOptions(email: string, subject: string, body: string): MailOptions{
@@ -29,18 +30,19 @@ function createTransporter(){
     return transporter;
 }
 
-export default async function sendEmail(
-    email: string,
-    subject: string,
-    body: string,
-    MoleculerError: typeof Errors.MoleculerError
+export default async function sendEmail(emailPayload: EmailPayload, MoleculerError: typeof Errors.MoleculerError
 ): Promise<{message: string}>{
     try {
+        const { email, subject, body } = EmailPayloadSchema.parse(emailPayload);
         const transporter = createTransporter();
         const mailOptions = getMailOptions(email, subject, body);
         await transporter.sendMail(mailOptions);
         return { message: "Email sent successfully" };
-    } catch (error: any) {
-        throw new MoleculerError(error, 400, 'BAD_REQUEST');
+    } catch (err: any) {
+        if (err instanceof ZodError) {
+            throw new MoleculerError(err.issues[0].message, 400, 'BAD_REQUEST');
+        }else{
+            throw new MoleculerError(err, 400, 'BAD_REQUEST');
+        }
     }
 }

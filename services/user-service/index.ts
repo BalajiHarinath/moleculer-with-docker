@@ -5,7 +5,7 @@ import userCreatedEvent from './src/events/userCreated';
 
 const broker = new ServiceBroker({
     nodeID: 'user-service',
-    transporter: 'nats://nats:4222',
+    transporter: process.env.NATS_URL || 'NATS',
 });
 
 broker.createService({

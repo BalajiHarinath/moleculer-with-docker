@@ -1,17 +1,14 @@
-import { Context, Errors } from 'moleculer';
+import { Context } from 'moleculer';
 import errorHandler from '../../helpers/error-handler';
-import { UserInput } from '../../types/user.types';
-import { validateInput } from './helper';
-const { MoleculerError } = Errors;
+import { UserInput, UserInputSchema } from '../../types/user.types';
 
 export default {
     async handler(ctx: Context<UserInput>){
         try{
-            const input = ctx.params;
-            validateInput(input, MoleculerError);
+            const input = UserInputSchema.parse(ctx.params);
             await ctx.emit('user.created', input);
             return {success: true, message: 'User created successfully', status: 200};
-        }catch(err){
+        }catch(err: any){
             return errorHandler(err);
         }
     }

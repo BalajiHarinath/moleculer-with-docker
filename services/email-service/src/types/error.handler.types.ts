@@ -5,5 +5,5 @@ export interface ErrorResponse {
         code: number;
         type: string;
     },
-    statusCode: string;
+    statusCode: number;
 }

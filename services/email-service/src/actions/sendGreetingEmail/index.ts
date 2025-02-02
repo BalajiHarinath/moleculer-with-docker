@@ -12,7 +12,7 @@ export default async function handler(ctx: Context<UserData>)
         const input = ctx.params;
         const subject = getGreetingEmailSubject();
         const body = getGreetingEmailBody(input);
-        await sendEmail(input.email, subject, body, MoleculerError);
+        await sendEmail({email: input.email, subject, body}, MoleculerError);
         return {success: true, message: 'Email sent successfully'};
     }catch(err){
         return errorHandler(err);

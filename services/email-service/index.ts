@@ -5,8 +5,8 @@ import handleUserCreatedEvent from './src/events/handleUserCreated';
 
 const broker = new ServiceBroker({
     nodeID: 'email-service',
-    transporter: 'nats://nats:4222',
-})
+    transporter: process.env.NATS_URL || 'NATS',
+});
 
 broker.createService({
     name: 'email',
